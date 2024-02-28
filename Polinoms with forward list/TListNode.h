@@ -1,11 +1,11 @@
 #pragma once
 class TListNode
 {
-	int val;
+	double val;
+	int id; ///3-digit identification number
 	TListNode* pNext;
 public:
-	TListNode(int _val) : val(_val), pNext(nullptr) {}
-	TListNode(int _val, TListNode* _pNext) : val(_val), pNext(_pNext) {}
-	friend TList; // TO SOLVE THIS PROBLEM
+	TListNode(double _val, int _id, TListNode* _pNext) : val(_val), id(_id), pNext(_pNext) {};
+	friend class TList;
 };
 

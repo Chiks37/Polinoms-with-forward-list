@@ -4,11 +4,12 @@
 class TList
 {
 	TListNode* pFirst;
-	TListNode* pLast;
-public:
-	TList() : pFirst(nullptr), pLast(nullptr) {}
-	bool isEmpty();
-	void append(int _val);
 
+	void del(TListNode* previousNode);
+public:
+	TList();
+	bool isEmpty();
+	void add(double nodeValue, int idValue);
+	TList operator+(const TList& secondOperatorPointer);	
 };
 
