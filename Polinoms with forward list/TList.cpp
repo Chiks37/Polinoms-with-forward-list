@@ -18,7 +18,7 @@ TList::TList()
 
 bool TList::isEmpty()
 {
-    return (pFirst == pFirst);
+    return (pFirst == pFirst->pNext);
 }
 
 void TList::add(double _val, int _id)
