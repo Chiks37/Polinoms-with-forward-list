@@ -77,9 +77,41 @@ TList TList::operator+(const TList& pOp2)
         pFirstCurrent = pFirstCurrent->pNext;
     }
 
-    while (pSecondCurrent->pNext != pSecondCurrent) {
+    while (pSecondCurrent->pNext != pSecondCurrent) 
+    {
         pResultList.add(pSecondCurrent->val, pSecondCurrent->id);
+        pSecondCurrent = pSecondCurrent->pNext;
     }
 
     return pResultList;
+}
+
+TList& TList::operator+=(const TList& pOp2)
+{
+    TListNode* pFirstCurrent = pFirst;
+    TListNode* pSecondCurrent = pOp2.pFirst;
+
+    while (pFirstCurrent->pNext != pFirstCurrent)
+    {
+        while ((pFirstCurrent->id > pSecondCurrent->id) && (pSecondCurrent->pNext != pSecondCurrent)) // id1 > id2
+        {
+            add(pSecondCurrent->val, pSecondCurrent->id);
+            pSecondCurrent = pSecondCurrent->pNext;
+        }
+        if (pFirstCurrent->id == pSecondCurrent->id) // id1 == id2
+        {
+            pFirstCurrent->val += pSecondCurrent->val;
+        }
+
+        pFirstCurrent = pFirstCurrent->pNext;
+    }
+
+    while (pSecondCurrent->pNext != pSecondCurrent) 
+    {
+        pFirstCurrent->pNext = pSecondCurrent;
+        pFirstCurrent = pSecondCurrent;
+        pSecondCurrent = pSecondCurrent->pNext;
+    }
+
+    return *this;
 }

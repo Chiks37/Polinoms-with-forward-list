@@ -11,5 +11,6 @@ public:
 	bool isEmpty();
 	void add(double nodeValue, int idValue);
 	TList operator+(const TList& secondOperatorPointer);	
+	TList& operator+=(const TList& secondOperatorPointer);
 };
 
