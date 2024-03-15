@@ -17,38 +17,51 @@ TList::TList()
     pFirst->pNext = pFirst;
 }
 
-bool TList::isEmpty()
+TList::TList(const TList& sList)
 {
-    return (pFirst == pFirst->pNext);
+    pFirst = new TListNode(0, -1, nullptr);
+    pFirst->pNext = pFirst;
+
+    TListNode* pFirstPrevious = pFirst;
+    TListNode* pSecondCurrent = sList.pFirst->pNext;
+    TListNode* pNew;
+
+    while (pSecondCurrent != sList.pFirst) 
+    {
+        pNew = new TListNode(pSecondCurrent->val, pSecondCurrent->id, pFirst);
+        pFirstPrevious->pNext = pNew;
+        pFirstPrevious = pFirstPrevious->pNext;
+        pSecondCurrent = pSecondCurrent->pNext;
+    }
 }
 
-void TList::add(double _val, int _id) //INCORRECT ORDER
+void TList::add(double _val, int _id) ///INCORRECT ORDER
 {
-    if (_val != 0 && _id >= 0 && _id <= 999)
+    if (_val != 0 && _id > 0 && _id <= 999)
     {
         TListNode* pPrevious = pFirst;
         TListNode* pCurrent = pPrevious->pNext;
 
-        while (_id > pCurrent->id) { // id1 > id2
+        while (_id < pCurrent->id) { // id1 < id2
             pPrevious = pCurrent;
             pCurrent = pCurrent->pNext;
         }
         if (_id == pCurrent->id) // id1 == id2
         {
             double valSum = pCurrent->val + _val;
-            if (valSum != 0) {
+            if (valSum != 0) 
+            {
                 pCurrent->val = valSum;
             }
-        }
-        else // id1 < id2
-        {
-            TListNode* pNew = new TListNode(_val, _id, pNew);
-
-            if (pCurrent->pNext != pCurrent)// inward inserting
+            else
             {
-                pNew->pNext = pCurrent->pNext;
+                del(pPrevious);
             }
-            pCurrent->pNext = pNew;
+        }
+        else // id1 > id2
+        {
+            TListNode* pNew = new TListNode(_val, _id, pCurrent);
+            pPrevious->pNext = pNew;
         }
     }
     else
@@ -62,17 +75,18 @@ TList TList::operator+(const TList& pOp2)
     TList resultList;
     TListNode* pFirstCurrent = pFirst->pNext;
     TListNode* pSecondCurrent = pOp2.pFirst->pNext;
-    TListNode* pResultLast = pFirst;
+    TListNode* pResultLast = resultList.pFirst;///////////
 
-    while (pFirstCurrent->pNext != pFirst || pSecondCurrent->pNext != pOp2.pFirst)
+    while (pFirstCurrent != pFirst || pSecondCurrent != pOp2.pFirst)
     {
         if (pFirstCurrent->id < pSecondCurrent->id)
         {
             TListNode* pNew = new TListNode(pSecondCurrent->val, pSecondCurrent->id, resultList.pFirst);
             pResultLast->pNext = pNew;
+            pResultLast = pResultLast->pNext;
             pSecondCurrent = pSecondCurrent->pNext;
         }
-        if (pFirstCurrent->id > pSecondCurrent->id)
+        else if (pFirstCurrent->id > pSecondCurrent->id)
         {
             TListNode* pNew = new TListNode(pFirstCurrent->val, pFirstCurrent->id, resultList.pFirst);
             pResultLast->pNext = pNew;
@@ -140,9 +154,10 @@ void TList::quickSum(TList& pOp2)
 void TList::print()
 {
     TListNode* pCurrent = pFirst->pNext;
+
     if (pCurrent != pFirst)
     {
-        std::cout << pCurrent;
+        std::cout << *pCurrent;
         pCurrent = pCurrent->pNext;
     }
     while (pCurrent != pFirst)
@@ -151,12 +166,66 @@ void TList::print()
         {
             std::cout << "+";
         }
-        std::cout << pCurrent;
+        std::cout << *pCurrent;
+        pCurrent = pCurrent->pNext;
     }
+    std::cout << '\n';
 }
 
-//std::ostream& operator<<(std::ostream& outStream, const TList& listToOutput)
+TList& TList::operator=(const TList& sList)
+{
+    pFirst = new TListNode(0, -1, nullptr);
+    pFirst->pNext = pFirst;
+
+    TListNode* pFirstPrevious = pFirst;
+    TListNode* pSecondCurrent = sList.pFirst->pNext;
+    TListNode* pNew;
+
+    while (pSecondCurrent != sList.pFirst)
+    {
+        pNew = new TListNode(pSecondCurrent->val, pSecondCurrent->id, pFirst);
+        pFirstPrevious->pNext = pNew;
+        pFirstPrevious = pFirstPrevious->pNext;
+        pSecondCurrent = pSecondCurrent->pNext;
+    }
+    return *this;
+}
+
+TList::~TList()
+{
+    TListNode* pPrevious = pFirst;
+    TListNode* pCurrent = pFirst->pNext;
+
+    pPrevious->val = 0;
+    pPrevious->id = 0;
+    pPrevious->pNext = nullptr;
+
+    while (pCurrent != pFirst)
+    {
+        pPrevious->val = 0;
+        pPrevious->id = 0;
+        pPrevious->pNext = nullptr;
+
+        pPrevious = pCurrent;
+        pCurrent = pCurrent->pNext;
+    } 
+}
+
+//std::ostream& operator<<(std::ostream& os, const TList& list)
 //{
-//    TListNode* a = listToOutput.pFirst->pNext;
-//    // TODO: вставьте здесь оператор return
+//    TListNode* pCurrent = list.pFirst->pNext;
+//    if (pCurrent != pFirst)
+//    {
+//        std::cout << pCurrent;
+//        pCurrent = pCurrent->pNext;
+//    }
+//    while (pCurrent != pFirst)
+//    {
+//        if (pCurrent->val > 0)
+//        {
+//            std::cout << "+";
+//        }
+//        std::cout << pCurrent;
+//    }
+//    return os;
 //}
