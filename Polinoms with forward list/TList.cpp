@@ -35,9 +35,9 @@ TList::TList(const TList& sList)
     }
 }
 
-void TList::add(double _val, int _id) ///INCORRECT ORDER
+void TList::add(double _val, int _id)
 {
-    if (_val != 0 && _id > 0 && _id <= 999)
+    if (_val != 0 && _id >= 0 && _id <= 999)
     {
         TListNode* pPrevious = pFirst;
         TListNode* pCurrent = pPrevious->pNext;
@@ -90,6 +90,7 @@ TList TList::operator+(const TList& pOp2)
         {
             TListNode* pNew = new TListNode(pFirstCurrent->val, pFirstCurrent->id, resultList.pFirst);
             pResultLast->pNext = pNew;
+            pResultLast = pResultLast->pNext;
             pFirstCurrent = pFirstCurrent->pNext;
         }
         else
@@ -100,6 +101,7 @@ TList TList::operator+(const TList& pOp2)
             {
                 TListNode* pNew = new TListNode(valSum, pFirstCurrent->id, resultList.pFirst);
                 pResultLast->pNext = pNew;
+                pResultLast = pResultLast->pNext;
             }
             pFirstCurrent = pFirstCurrent->pNext;
             pSecondCurrent = pSecondCurrent->pNext;
@@ -133,9 +135,9 @@ void TList::quickSum(TList& pOp2)
             pFirstCurrent = pFirstCurrent->pNext;
         }
         else
-        {///THE WHOLE {...} IS DIFFERENT FROM TE NOTEBOOK, MAYBE INCORRECT
+        {
             pFirstCurrent->val += pSecondCurrent->val;
-            pSecondPrevious = pSecondPrevious->pNext; ///WASNT WROTEN IN THE NOTEBOOK, MAYBE IS INCORRECT
+            pSecondPrevious = pSecondPrevious->pNext;
             pSecondCurrent = pSecondCurrent->pNext;
 
             if (pFirstCurrent->val == 0) {
@@ -214,22 +216,3 @@ TList::~TList()
         pCurrent = pCurrent->pNext;
     }
 }
-
-//std::ostream& operator<<(std::ostream& os, const TList& list)
-//{
-//    TListNode* pCurrent = list.pFirst->pNext;
-//    if (pCurrent != pFirst)
-//    {
-//        std::cout << pCurrent;
-//        pCurrent = pCurrent->pNext;
-//    }
-//    while (pCurrent != pFirst)
-//    {
-//        if (pCurrent->val > 0)
-//        {
-//            std::cout << "+";
-//        }
-//        std::cout << pCurrent;
-//    }
-//    return os;
-//}

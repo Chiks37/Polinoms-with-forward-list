@@ -15,7 +15,7 @@ void main()
 	{
 		std::cout << "Enter coefficient >> ";
 		std::cin >> coef;
-		
+
 		if (coef != 0)
 		{
 			std::cout << "Enter x degree >> ";
@@ -111,17 +111,9 @@ void main()
 
 	} while (ans);
 
-	//TList firstList;
-	//firstList.add(3, 222);
-	//firstList.add(5, 555);
-	//firstList.add(1, 111);
 	std::cout << "\nFirst:\n";
 	firstList.print();
 
-	//TList secondList;
-	//secondList.add(4, 444);
-	//secondList.add(3, 310);
-	//secondList.add(-1, 111);
 	std::cout << "\nSecond:\n";
 	secondList.print();
 
@@ -133,9 +125,9 @@ void main()
 	std::cout << "\nSecond:\n";
 	secondList.print();
 
-	std::cout << "\nSum2:\n";
+	std::cout << "\nSum2.\n";
 	firstList.quickSum(secondList);
-	std::cout << "\nFirst:\n";
+	std::cout << "First:\n";
 	firstList.print();
 	std::cout << "\nSecond:\n";
 	secondList.print();

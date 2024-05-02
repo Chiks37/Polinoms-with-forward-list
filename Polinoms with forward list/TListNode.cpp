@@ -2,7 +2,11 @@
 
 std::ostream& operator<<(std::ostream& os, const TListNode& node)
 {
-    if (node.val != 1)
+    if (node.val == -1)
+    {
+        os << "-";
+    }
+    else if (node.val != 1)
     {
         os << node.val;
     }
